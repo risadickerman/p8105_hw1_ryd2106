@@ -4,10 +4,13 @@ output: html_document
 date: "2026-09-23"
 ---
 
-```{r setup, include=FALSE}
+```{r library load-in, include=FALSE}
 library(tidyverse)
 ```
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
 # Problem 1
 
 ```{r load in penguins, include=FALSE}
@@ -18,17 +21,22 @@ flip_len_spec = aggregate(penguins$flipper_length_mm,list(penguins$species), mea
 Th penguins data set from the palmerpenguins package describes morphological features of `r nrow(penguins)` different penguins.
 `r ncol(penguins)` different variables were observed. These included the bird's `r colnames(penguins[3:7])` in addition to the `r colnames(penguins[1])` of the bird, the `r colnames(penguins[2])` they lived on, and the `r colnames(penguins[8])` the samples were collected.
 
-This study found several interesting statistics of the penguins on the following islands: `r unique(penguins$island)`. For example it was found that the mean flipper length of these birds lie at `r signif(mean(penguins$flipper_length_mm, na.rm=TRUE), digits=3)`mm. The flipper length of the `r flip_len_spec[1,1]` penguin had a mean of `r signif(flip_len_spec[1,2], digits=3)`mm, the `r flip_len_spec[2,1]` species mean was `r signif(flip_len_spec[2,2], digits = 3)`mm, while the `r flip_len_spec[3,1]`'s mean was `r signif(flip_len_spec[3,2], digits=3)`mm.
+This study found several interesting statistics of the penguins on the following islands: `r unique(penguins$island)`. For example, it was found that the mean flipper length of all these birds lie at `r signif(mean(penguins$flipper_length_mm, na.rm=TRUE), digits=3)`mm. The flipper length of the `r flip_len_spec[1,1]` penguin had a mean of `r signif(flip_len_spec[1,2], digits=3)`mm, the `r flip_len_spec[2,1]` species mean was `r signif(flip_len_spec[2,2], digits = 3)`mm, and the `r flip_len_spec[3,1]`'s mean was `r signif(flip_len_spec[3,2], digits=3)`mm.
 
 
-Visualizations of certain features are presented below. 
+Visualizations of certain features are presented below:
 
 Flipper length was compared to bill length for each species.
-```{r }
-flip_len_spec = aggregate(penguins$flipper_length_mm,list(penguins$species), mean, na.rm=TRUE)
-flip_len_spec
-flip_len_spec[3,3]
+```{r Scatterplot for Flipper length vs Bill length for All Species}
+ggplot(data = penguins, mapping = aes(x = flipper_length_mm, y = bill_length_mm)) + geom_point() +
+  geom_point(aes(color=species),
+)
+ggsave("hw_scatterplot.pdf")
 ```
+Make a scatter plot of flipper_length_mm (y) vs bill_length_mm (x); color points using the species variable (adding color = ... inside of aes in your ggplot code should help).
+
+Export your first scatter plot to your project directory using ggsave.
+
 
 
 
