@@ -12,15 +12,24 @@ library(tidyverse)
 data("penguins", package = "palmerpenguins")
 ```
 
+This data set describes morphological features of `r nrow(penguins)` penguins.
+`r ncol(penguins)` different variables were observed. These included the bird's `r colnames(penguins[3:7])` in addition to the `r colnames(penguins[1])` of the bird, the `r colnames(penguins[2])` they lived on, and the `r colnames(penguins[8])` the samples were collected from.
+
+The main islands these birds were sampled from include: `r  unique(penguins$island)`.
 
 
-```{r cars}
-summary(cars)
+the data in this dataset, including names / values of important variables
+the size of the dataset (using nrow and ncol)
+the mean flipper length
+
+
+```{r }
+
 ```
 
 
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r }
+
 ```
 
