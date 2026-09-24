@@ -1,0 +1,26 @@
+---
+title: "p8105_hw1_ryd2106"
+output: html_document
+date: "2026-09-23"
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+```{r load in penguins}
+data("penguins", package = "palmerpenguins")
+```
+
+
+
+```{r cars}
+summary(cars)
+```
+
+
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
