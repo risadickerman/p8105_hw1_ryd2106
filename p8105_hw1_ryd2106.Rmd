@@ -2,21 +2,31 @@
 title: "p8105_hw1_ryd2106"
 author: "Risa Dickerman"
 date: "2026-09-25"
-output: html_document
+output: github_document
 ---
 
-```{r setup, include=FALSE}
 
+```{r library load in, include = FALSE}
+#Library and data set load in
+library(tidyverse)
 ```
 
+# Problem 1
+```{r problem_1_a}
+#Load in data frame
+data("penguins", package = "palmerpenguins")
 
-```{r cars}
+#Calculate the mean flipper length per species
+flip_len_spec = aggregate(penguins$flipper_length_mm,
+                          list(penguins$species), mean, na.rm=TRUE)
 
 ```
+The penguins data set from the palmerpenguins package described the morphological features of `r nrow(penguins)` different birds. There were `r ncol(penguins)` different variables observed. These variables included the bird's `r colnames(penguins[3:7])` in addition to the penguin's `r colnames(penguins[1])`, the `r colnames(penguins[2])` they lived on, and the `r colnames(penguins[8])` the samples were collected. The species, island, and sex variables were all factorial (category) values denoted by fct. The bill_length_mm and bill_depth_mm variables were numeric (dbl) while the year, flipper_length_mm, and body_mass_g were all integers (int).
+
+This study found several interesting statistics of the penguins on the following islands: `r unique(penguins$island)`. For example, it was found that the mean flipper length of all these birds lie at `r signif(mean(penguins$flipper_length_mm, na.rm=TRUE), digits=3)`mm. The mean flipper lengths of the `r flip_len_spec[1,1]`, `r flip_len_spec[2,1]`, and `r flip_len_spec[3,1]` penguins were `r signif(flip_len_spec[1,2], digits=3)`mm, `r signif(flip_len_spec[2,2], digits = 3)`mm, and `r signif(flip_len_spec[3,2], digits=3)`mm respectively.
 
 
-
-```{r pressure, echo=FALSE}
+```{r problem_1_b }
 
 ```
 
