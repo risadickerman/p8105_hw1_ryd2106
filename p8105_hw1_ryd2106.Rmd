@@ -1,0 +1,23 @@
+---
+title: "p8105_hw1_ryd2106"
+author: "Risa Dickerman"
+date: "2026-09-25"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+```
+
+
+```{r cars}
+
+```
+
+
+
+```{r pressure, echo=FALSE}
+
+```
+
+
