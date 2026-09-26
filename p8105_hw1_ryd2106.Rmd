@@ -18,22 +18,18 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 ```{r dataframe}
 #Load in data frame
 data("penguins", package = "palmerpenguins")
-
-#Calculate the mean flipper length per species
-flip_len_spec = aggregate(penguins$flipper_length_mm,
-                    list(penguins$species), mean, na.rm=TRUE)
-
 ```
-The penguins data set from the palmerpenguins package described the morphological features of `r nrow(penguins)` different birds. There were `r ncol(penguins)` different variables observed. These variables included the bird's `r colnames(penguins[3:7])` in addition to the penguin's `r colnames(penguins[1])`, the `r colnames(penguins[2])` they lived on, and the `r colnames(penguins[8])` the samples were collected. The species, island, and sex variables were all factorial (category) values denoted by fct. The bill_length_mm and bill_depth_mm variables were numeric (dbl) while the year, flipper_length_mm, and body_mass_g were all integers (int).
+The penguins dataset from the palmerpenguins package described the morphological features of `r nrow(penguins)` different birds. There were `r ncol(penguins)` different variables observed. These variables included the bird's `r colnames(penguins[3:7])` in addition to the penguin's `r colnames(penguins[1])`, the `r colnames(penguins[2])` they lived on, and the `r colnames(penguins[8])` the samples were collected. The species, island, and sex variables were all factor (category) values denoted by fct. The bill_length_mm and bill_depth_mm variables were numeric (dbl) while the year, flipper_length_mm, and body_mass_g were all integers (int).
 
-This study found several interesting statistics of the penguins on the following islands: `r unique(penguins$island)`. For example, it was found that the mean flipper length of all these birds lie at `r signif(mean(penguins$flipper_length_mm, na.rm=TRUE), digits=3)`mm. The mean flipper lengths of the `r flip_len_spec[1,1]`, `r flip_len_spec[2,1]`, and `r flip_len_spec[3,1]` penguins were `r signif(flip_len_spec[1,2], digits=3)`mm, `r signif(flip_len_spec[2,2], digits = 3)`mm, and `r signif(flip_len_spec[3,2], digits=3)`mm respectively.
+This study found several interesting statistics of the penguins on the following islands: `r unique(penguins$island)`. For example, it was found that the mean flipper length of all these birds lie at `r signif(mean(penguins$flipper_length_mm, na.rm=TRUE), digits=3)`mm.
 
 Visualizations of certain features are presented below:
 
 A scatter plot of the flipper length vs the bill length of these penguins is shown below:
 ```{r scatter_plot}
 #Create the scatterplot and save
-ggplot(data = penguins, mapping = aes(x = flipper_length_mm, y = bill_length_mm)) + geom_point() + geom_point(aes(color=species))
+ggplot(data = penguins, mapping = aes(x = bill_length_mm, y = flipper_length_mm)) + geom_point() + geom_point(aes(color=species))
+
 ggsave("hw_scatterplot.pdf")
 ```
 
@@ -48,19 +44,39 @@ prob2_df = tibble(
   vec_random = rnorm(10, mean = 0, sd= 1 ),
   vec_logical = (vec_random > 0),
   vec_character = c("It", "was", "the", "best", "of", "times,", "it", "was", "the", "worst.."),
-  vec_factorial = factor(c("mild", "medium", "medium", "hot", "mild", "hot", "medium", "hot", "medium", "mild"))
+  vec_factor = factor(c("mild", "medium", "medium", "hot", "mild", "hot", "medium", "hot", "medium", "mild"))
 )
 
 #Take the mean of the variables
+  #Mean of the random vector
 mean_random = mean(
   pull(prob2_df,1))
+  #Mean of the logical vector
 mean_logical = mean(
   pull(prob2_df,2))
+  #Mean of the character vector
 mean_character = mean(
   pull(prob2_df,3))
-mean_factorial =mean(
+  #Mean of the factor vector
+mean_factor =mean(
   pull(prob2_df,4))
 prob2_df
 ```
 
-When taking the mean of each variable in the prob2_df, some make sense while others do not. The most logical result is the random vector's (vec_randomn) mean of `r mean_random`. The mean of the logical vector (vec_logical), however, returns the numerical value `r mean_logical` even though it is taken from the logical values TRUE and FALSE. Finally, taking the mean of both the character (vec_character) and factorial (vec_factorial) vectors return a `r mean_factorial` value.
+When taking the mean of each variable in the prob2_df, some make sense while others do not. The most logical result is the random vector's (vec_randomn) mean of `r mean_random`. The mean of the logical vector (vec_logical), however, returns the numerical value `r mean_logical` even though it is taken from the logical values TRUE and FALSE. Finally, taking the mean of both the character (vec_character) and factor (vec_factor) vectors return a `r mean_factor` value.
+
+One can attempt to get these non-numeric values to become integers through the as.numeric function but the results are mixed.
+```{r as_numeric, eval=FALSE}
+#Convert the logical vector to a numerical answer
+as.numeric(
+  pull(prob2_df,2))
+#Convert the character vector to a numerical answer
+as.numeric(
+  pull(prob2_df,3))
+#Convert the factor vector to a numerical answer
+as.numeric(
+  pull(prob2_df,4))
+```
+
+The logical values, for example, revert to 1's and 0's. This is because logical statements are Boolean data types. Within this Boolean frame TRUE equals 1, while FALSE equals 0. Therefore, it makes since that the mean of these values would produce a numeric answer. When the as.numeric function is applied to the character vector, a vector of NA values are returned. This makes sense because in R there are no inlaid assignment of numbers to character values. It is therefore impossible to retrieve a logical answer when applying functions that treat the vector as numerical values. The factor vector returns a set of 1's, 2's, and 3's. These values signify a ordinal vector was created where each label (e.g., mild) were assigned a number (e.g., 3) corresponding to the degree of intensity. The data type is not a numeric value but when the as.numeric function is applied these values revert to the number value. When the mean is taken of this resulting numeric vector you can obtain a logical mean of `r mean(as.numeric(pull(prob2_df,4)))`.
+
