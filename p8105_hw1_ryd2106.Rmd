@@ -60,7 +60,6 @@ mean_character = mean(
   #Mean of the factor vector
 mean_factor =mean(
   pull(prob2_df,4))
-prob2_df
 ```
 
 When taking the mean of each variable in the prob2_df, some make sense while others do not. The most logical result is the random vector's (vec_randomn) mean of `r mean_random`. The mean of the logical vector (vec_logical), however, returns the numerical value `r mean_logical` even though it is taken from the logical values TRUE and FALSE. Finally, taking the mean of both the character (vec_character) and factor (vec_factor) vectors return a `r mean_factor` value.
