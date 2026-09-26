@@ -15,7 +15,7 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 ```
 
 # Problem 1
-```{r problem_1_a}
+```{r dataframe}
 #Load in data frame
 data("penguins", package = "palmerpenguins")
 
@@ -31,10 +31,36 @@ This study found several interesting statistics of the penguins on the following
 Visualizations of certain features are presented below:
 
 A scatter plot of the flipper length vs the bill length of these penguins is shown below:
-```{r problem_1_b}
-#Scatter plot and save
+```{r scatter_plot}
+#Create the scatterplot and save
 ggplot(data = penguins, mapping = aes(x = flipper_length_mm, y = bill_length_mm)) + geom_point() + geom_point(aes(color=species))
 ggsave("hw_scatterplot.pdf")
 ```
 
+#Problem 2
 
+```{r data_frame}
+#Setting the seed
+set.seed(21061)
+
+#Producing a data frame
+prob2_df = tibble(
+  vec_random = rnorm(10, mean = 0, sd= 1 ),
+  vec_logical = (vec_random > 0),
+  vec_character = c("It", "was", "the", "best", "of", "times,", "it", "was", "the", "worst.."),
+  vec_factorial = factor(c("mild", "medium", "medium", "hot", "mild", "hot", "medium", "hot", "medium", "mild"))
+)
+
+#Take the mean of the variables
+mean_random = mean(
+  pull(prob2_df,1))
+mean_logical = mean(
+  pull(prob2_df,2))
+mean_character = mean(
+  pull(prob2_df,3))
+mean_factorial =mean(
+  pull(prob2_df,4))
+prob2_df
+```
+
+When taking the mean of each variable in the prob2_df, some make sense while others do not. The most logical result is the random vector's (vec_randomn) mean of `r mean_random`. The mean of the logical vector (vec_logical), however, returns the numerical value `r mean_logical` even though it is taken from the logical values TRUE and FALSE. Finally, taking the mean of both the character (vec_character) and factorial (vec_factorial) vectors return a `r mean_factorial` value.
